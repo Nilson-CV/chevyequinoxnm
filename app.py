@@ -1070,7 +1070,7 @@ def render_hero() -> None:
         f"""
         <section class="hero">
             <div class="hero-heading">
-                <h1>
+                <h1 style="color: blue;">
                     Chevy <span>Equinox</span>
                 </h1>
                 <div class="hero-contact">
