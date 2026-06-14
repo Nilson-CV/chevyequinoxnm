@@ -139,6 +139,7 @@ def render_photo_gallery(images: list[Path]) -> None:
                     const slides = Array.from(gallery.querySelectorAll(".manual-gallery-slide"));
                     const dots = Array.from(gallery.querySelectorAll(".manual-gallery-dot"));
                     let active = Number(gallery.dataset.active || 0);
+                    let autoSlideTimer = null;
 
                     const showSlide = (target) => {
                         if (!slides.length) {
@@ -155,6 +156,23 @@ def render_photo_gallery(images: list[Path]) -> None:
                         });
                     };
 
+                    const startAutoSlide = () => {
+                        if (slides.length <= 1) {
+                            return;
+                        }
+
+                        autoSlideTimer = window.setInterval(() => {
+                            showSlide(active + 1);
+                        }, 4500);
+                    };
+
+                    const restartAutoSlide = () => {
+                        if (autoSlideTimer) {
+                            window.clearInterval(autoSlideTimer);
+                        }
+                        startAutoSlide();
+                    };
+
                     gallery.addEventListener("click", (event) => {
                         const control = event.target.closest("[data-gallery-action], [data-gallery-index]");
 
@@ -167,13 +185,16 @@ def render_photo_gallery(images: list[Path]) -> None:
 
                         if (control.dataset.galleryIndex !== undefined) {
                             showSlide(Number(control.dataset.galleryIndex));
+                            restartAutoSlide();
                             return;
                         }
 
                         showSlide(control.dataset.galleryAction === "previous" ? active - 1 : active + 1);
+                        restartAutoSlide();
                     });
 
                     showSlide(active);
+                    startAutoSlide();
                 });
             })();
         </script>
@@ -352,7 +373,8 @@ def render_css() -> None:
             .manual-gallery-card {{
                 position: relative;
                 width: 100%;
-                height: clamp(300px, 56vw, 720px);
+                aspect-ratio: 16 / 9;
+                height: auto;
                 margin: 0;
                 overflow: hidden;
                 border-radius: 8px;
@@ -367,6 +389,7 @@ def render_css() -> None:
                 display: grid;
                 place-items: center;
                 margin: 0;
+                overflow: hidden;
                 background: #060708;
                 opacity: 0;
                 pointer-events: none;
@@ -379,6 +402,8 @@ def render_css() -> None:
 
             .manual-gallery-slide img {{
                 display: block;
+                position: absolute;
+                inset: 0;
                 width: 100%;
                 height: 100%;
                 object-fit: contain;
