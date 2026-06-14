@@ -541,6 +541,7 @@ def render_css() -> None:
                 grid-template-columns: auto minmax(0, 1fr) auto;
                 align-items: center;
                 gap: clamp(0.65rem, 2vw, 1.35rem);
+                color: #181b1f;
             }}
 
             .hero h1 {{
@@ -1070,7 +1071,7 @@ def render_hero() -> None:
         f"""
         <section class="hero">
             <div class="hero-heading">
-                <h1 style="color: blue;">
+                <h1>
                     Chevy <span>Equinox</span>
                 </h1>
                 <div class="hero-contact">
