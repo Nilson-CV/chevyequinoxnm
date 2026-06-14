@@ -329,7 +329,8 @@ def render_css() -> None:
                 border-radius: 8px !important;
                 background: linear-gradient(135deg, #25d366, #0e9f63) !important;
                 color: #ffffff !important;
-                font-weight: 900 !important;
+                font-size: 1.18rem !important;
+                font-weight: 950 !important;
                 box-shadow: 0 18px 38px rgba(37, 211, 102, 0.24), 0 10px 22px rgba(0, 0, 0, 0.28) !important;
             }}
 
